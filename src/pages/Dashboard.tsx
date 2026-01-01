@@ -39,41 +39,41 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">My Tasks</h2>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 p-6">
+      <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">My Tasks</h2>
           <button
             onClick={logout}
-            className="text-sm text-red-600 hover:underline"
+            className="text-sm font-semibold text-red-600 hover:text-red-700 transition"
           >
             Logout
           </button>
         </div>
 
-        <div className="flex mb-4">
+        <div className="flex mb-6">
           <input
-            className="flex-1 p-2 border rounded-l"
+            className="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="New task"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <button
             onClick={addTask}
-            className="bg-blue-600 text-white px-4 rounded-r"
+            className="bg-blue-600 text-white px-6 rounded-r-lg font-semibold hover:bg-blue-700 transition duration-200"
           >
             Add
           </button>
         </div>
 
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {tasks.map((t) => (
             <li
               key={t.id}
-              className="p-2 border rounded flex justify-between"
+              className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center hover:bg-gray-100 transition"
             >
-              <span>{t.title}</span>
-              <span className="text-sm text-gray-500">{t.status}</span>
+              <span className="font-medium text-gray-800">{t.title}</span>
+              <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">{t.status}</span>
             </li>
           ))}
         </ul>
