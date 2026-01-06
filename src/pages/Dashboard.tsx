@@ -38,6 +38,15 @@ export default function Dashboard() {
     navigate("/login");
   };
 
+  const updateTaskStatus = async (id: number, newStatus: string) => {
+    try {
+      await api.put(`/tasks/${id}`, { status: newStatus });
+      loadTasks();
+    } catch (error) {
+      console.error("Failed to update task status:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 p-6 text-gray-100">
       <div className="max-w-4xl mx-auto">
@@ -86,13 +95,29 @@ export default function Dashboard() {
                 {tasks.map((t) => (
                   <li
                     key={t.id}
-                    className="p-4 bg-gray-800 border border-gray-700 rounded-lg flex justify-between items-center hover:shadow-lg transition"
+                    className={`p-4 bg-gray-800 border border-gray-700 rounded-lg flex justify-between items-center hover:shadow-lg transition ${
+                      t.status === "Done" ? "opacity-70" : ""
+                    }`}
                   >
                     <div className="flex items-center gap-4">
                       <span className="inline-flex h-3 w-3 rounded-full bg-green-400" aria-hidden></span>
-                      <span className="font-medium text-gray-100">{t.title}</span>
+                      <span
+                        className={`font-medium text-gray-100 ${
+                          t.status === "Done" ? "line-through text-gray-400" : ""
+                        }`}
+                      >
+                        {t.title}
+                      </span>
                     </div>
-                    <span className="text-xs font-semibold text-teal-100 bg-teal-600 px-3 py-1 rounded-full">{t.status}</span>
+                    <select
+                      value={t.status}
+                      onChange={(e) => updateTaskStatus(t.id, e.target.value)}
+                      className="text-xs font-semibold text-white bg-teal-600 hover:bg-teal-500 px-3 py-1 rounded-full cursor-pointer transition focus:outline-none focus:ring-2 focus:ring-teal-400"
+                    >
+                      <option value="Todo">Todo</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Done">Done</option>
+                    </select>
                   </li>
                 ))}
               </ul>
